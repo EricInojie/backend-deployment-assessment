@@ -1,8 +1,8 @@
-\# MuchToDo Backend Deployment Assessment
+ MuchToDo Backend Deployment Assessment
 
 
 
-\## Project Overview
+Project Overview
 
 
 
@@ -14,7 +14,7 @@ The infrastructure is provisioned in the AWS Stockholm region (`eu-north-1`).
 
 
 
-\## Technologies Used
+Technologies Used
 
 
 
@@ -40,7 +40,7 @@ The infrastructure is provisioned in the AWS Stockholm region (`eu-north-1`).
 
 
 
-\## Infrastructure Architecture
+\ Infrastructure Architecture
 
 
 
@@ -72,7 +72,7 @@ The Terraform configuration provisions:
 
 
 
-\### Network and Security Design
+ Network and Security Design
 
 
 
@@ -94,7 +94,7 @@ The Backend EC2 instance is not directly exposed to the public internet.
 
 
 
-\### Application Deployment
+Application Deployment
 
 
 
@@ -106,7 +106,7 @@ A separate MongoDB EC2 instance was also provisioned by Terraform as part of the
 
 
 
-\## Project Structure
+ Project Structure
 
 
 
@@ -200,11 +200,11 @@ Configure AWS CLI credentials and confirm that the correct AWS identity is activ
 
 
 
-\## Terraform Deployment
+ Terraform Deployment
 
 
 
-\### 1. Configure variables
+ 1. Configure variables
 
 
 
@@ -256,7 +256,7 @@ Never commit the actual `terraform.tfvars` file.
 
 
 
-\### 2. Initialize Terraform
+ 2. Initialize Terraform
 
 
 
@@ -280,7 +280,7 @@ terraform plan -out=tfplan
 
 
 
-\### 4. Provision infrastructure
+ 4. Provision infrastructure
 
 
 
@@ -292,7 +292,7 @@ terraform apply tfplan
 
 
 
-\### 5. View infrastructure outputs
+ 5. View infrastructure outputs
 
 
 
@@ -308,11 +308,11 @@ The outputs include the ALB DNS name, Bastion public IP, Backend private IP, Mon
 
 
 
-\## Docker Deployment
+ Docker Deployment
 
 
 
-\### 1. Build the application image
+ 1. Build the application image
 
 
 
@@ -328,7 +328,7 @@ docker build -t muchtodo-backend:local .
 
 
 
-\### 2. Configure environment variables
+ 2. Configure environment variables
 
 
 
@@ -340,7 +340,7 @@ Do not commit `.env`.
 
 
 
-\### 3. Start the local application
+ 3. Start the local application
 
 
 
@@ -352,7 +352,7 @@ docker compose up -d --build
 
 
 
-\### 4. Check container status
+ 4. Check container status
 
 
 
@@ -364,7 +364,7 @@ docker compose ps
 
 
 
-\### 5. Test the health endpoint
+ 5. Test the health endpoint
 
 
 
@@ -380,7 +380,7 @@ The expected response is HTTP 200.
 
 
 
-\## AWS EC2 Deployment
+ AWS EC2 Deployment
 
 
 
@@ -444,7 +444,7 @@ sudo docker compose logs --tail=60 backend
 
 
 
-\## Application Health Verification
+ Application Health Verification
 
 
 
@@ -498,7 +498,7 @@ The AWS Application Load Balancer target group also reported one healthy target 
 
 
 
-\## Evidence
+ Evidence
 
 
 
