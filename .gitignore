@@ -1,0 +1,27 @@
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+
+# Credentials and private keys
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+
+# Operating system
+.DS_Store
+Thumbs.db
+*.tar
+tfplan

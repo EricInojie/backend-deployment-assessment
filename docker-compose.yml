@@ -1,0 +1,62 @@
+
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: muchtodo-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-muchtodo}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-muchtodo_local_password}
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'mongosh --quiet -u "$$MONGO_INITDB_ROOT_USERNAME" -p "$$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase admin --eval "db.adminCommand({ping: 1}).ok"'
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - muchtodo-network
+
+  backend:
+    build: .
+    image: muchtodo-backend:local
+    container_name: muchtodo-backend
+    restart: unless-stopped
+    environment:
+      PORT: "8080"
+      MONGO_URI: "mongodb://${MONGO_ROOT_USERNAME:-muchtodo}:${MONGO_ROOT_PASSWORD:-muchtodo_local_password}@mongodb:27017/much_todo_db?authSource=admin"
+      DB_NAME: "much_todo_db"
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-local-development-only-change-this-secret}
+      JWT_EXPIRATION_HOURS: "72"
+      ENABLE_CACHE: "false"
+      LOG_LEVEL: "DEBUG"
+      LOG_FORMAT: "json"
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - -q
+        - -O
+        - /dev/null
+        - http://127.0.0.1:8080/health
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    networks:
+      - muchtodo-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  muchtodo-network:
+    driver: bridge
